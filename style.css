@@ -29,6 +29,10 @@ form button {
   border: none; 
   padding: 10px; 
 }
+#user-message {
+  float: right;
+  background: #31326f;
+}
 #messages { 
   list-style-type: none; 
   margin: 10px; 

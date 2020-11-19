@@ -18,27 +18,44 @@
         background: #31326f; 
         padding: 10px; 
         position: fixed; 
-        bottom: 0; 
-        height: 30px;
+        bottom: 0px; 
         width: 100%; 
       }
       form input { 
         background: #dbf6e9;
         border: 0;
         padding: 10px; 
-        width: 90%; 
+        width: 83%; 
         margin-right: 0.5%; 
+        margin-left: 1.8%;
+        border-radius: 25px;
+        outline: none;
       }
       form button { 
-        width: 9%; 
+        width: 11%; 
         background: #9ddfd3;
+        font-weight: bold;
+        font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+        color: #212152;
         border: none; 
-        padding: 10px; 
+        margin: 8px;
+        padding: 8px;
+        border-radius: 25px;
+        outline: none;
+      }
+      button:hover {
+        background: #7ec2b5
       }
       #messages { 
         list-style-type: none; 
+        font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+        font-size: 18px;
         margin: 10px; 
         padding: 6px; 
+      }
+      .user-message {
+        float: right;
+        background: #31326f;
       }
       #messages li { 
         padding: 5px 10px; 
@@ -74,6 +91,9 @@
           //$('#messages').append($('<li>').text(Math.range(0, 4)));
           //$('#messages').append($('<li>').text(Math.evaluate(msg)));
         });
+        socket.on('users message', function(msg){
+          $('#messages').append($('<li class="user-message">').text(msg));
+        })
       });
     </script>
   </body>

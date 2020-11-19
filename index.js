@@ -9,7 +9,6 @@ var math = require('mathjs');
 
 const PORT = process.env.PORT || 5000;
 
-// __dirname is the folder that index.js is in
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html');
 });
@@ -21,10 +20,21 @@ app.use(express.static(publicPath));
 
 io.on('connection', (socket) => {
   socket.on('chat message', (msg) => {
-    io.emit('chat message', math.evaluate(msg));
+    if (msg != "") {
+      try {
+        // I recognize this would be a security risk without processing the input first
+        var result = math.evaluate(msg);
+        //io.emit('chat message', msg + ' = ' + result);
+        socket.broadcast.emit('chat message', msg);
+        socket.emit('users message', msg);
+      }
+      catch (err) {
+        io.emit('chat message', "The input '" + msg + "' cannot be evaluated.");
+      }
+    }
   });
 });
 
 http.listen(PORT, () => {
-  console.log('listening on localhost:3000');
+  console.log('listening on localhost:5000');
 });
