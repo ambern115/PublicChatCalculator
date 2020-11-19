@@ -1,16 +1,56 @@
-var express = require('express');
-var app = express();
-var http = require('http').createServer(app);
-var io = require('socket.io')(http);
-var path = require('path');
-
-// maybemaybemaybe
-var math = require('mathjs');
-
+const express = require('express');
+const app = express();
+const http = require('http').createServer(app);
+const socketio = require('socket.io')(http);
+const path = require('path');
+const math = require('mathjs');
+const { v4: uuidv4 } = require('uuid');
+const session = require('express-session');
+const FileStore = require('session-file-store')(session);
+const bodyParser = require('body-parser');
 const PORT = process.env.PORT || 5000;
 
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(session({
+  genid: (req) => {
+    console.log(req.sessionId);
+    return uuidv4(); // use UUIDs for session IDs
+  },
+  store: new FileStore(),
+  secret: 'tempsecret',
+  resave: false,
+  saveUninitialized: true
+}));
+
+var sess;
+// Create the homepage route at '/'
 app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/index.html');
+  sess = req.session;
+  console.log(sess.id);
+  console.log(sess.msg1);
+  if (sess.msg1) {
+    res.redirect('/sendmsg');
+  } else {
+    res.sendFile(__dirname + '/index.html');
+  }
+});
+
+app.post('/postmsg', (req, res) => {
+  sess = req.session;
+  sess.msg1 = req.body.msg;
+  console.log(sess.msg1);
+  sess.save();
+});
+
+app.get('/sendmsg', function(req,res) {
+  console.log('sendmessage?');
+  sess = req.session;
+  if (sess.msg1) {
+    res.sendFile(__dirname + '/index.html');
+    
+    //res.write('<h1>Hey ' + sess.msg1 + ' </h1>');
+  }
 });
 
 // Get path to the public folder - used to access style sheet
@@ -18,13 +58,12 @@ var publicPath = path.resolve(__dirname, 'public');
 // Serve this path with the Express static file middleware
 app.use(express.static(publicPath));
 
-io.on('connection', (socket) => {
+socketio.on('connection', (socket) => {
   socket.on('chat message', (msg) => {
     if (msg != "") {
       try {
         // I recognize this would be a security risk without processing the input first
         var result = math.evaluate(msg);
-        //io.emit('chat message', msg + ' = ' + result);
         socket.broadcast.emit('chat message', msg + " = " + result);
         socket.emit('users message', msg + " = " + result);
       }

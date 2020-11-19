@@ -130,6 +130,7 @@
         socket.on('users message', function(msg){
           $('#messages').append($('<li class="sent-message">').text(msg));
           message_div.scrollTop = message_div.scrollHeight;
+          $.post('/postmsg', {msg: msg}, function(data) {});
         })
       });
     </script>
