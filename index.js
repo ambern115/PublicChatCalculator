@@ -3,6 +3,10 @@ var app = express();
 var http = require('http').createServer(app);
 var io = require('socket.io')(http);
 var path = require('path');
+
+// maybemaybemaybe
+var math = require('mathjs');
+
 const PORT = process.env.PORT || 5000;
 
 // __dirname is the folder that index.js is in
@@ -17,7 +21,7 @@ app.use(express.static(publicPath));
 
 io.on('connection', (socket) => {
   socket.on('chat message', (msg) => {
-    io.emit('chat message', msg);
+    io.emit('chat message', math.evaluate(msg));
   });
 });
 

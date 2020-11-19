@@ -24,8 +24,8 @@
         });
         socket.on('chat message', function(msg){
           $('#messages').append($('<li>').text(msg));
-          $('#messages').append($('<li>').text(Math.range(0, 4)));
-          $('#messages').append($('<li>').text(Math.evaluate(msg)));
+          //$('#messages').append($('<li>').text(Math.range(0, 4)));
+          //$('#messages').append($('<li>').text(Math.evaluate(msg)));
         });
       });
     </script>
