@@ -25,11 +25,12 @@ io.on('connection', (socket) => {
         // I recognize this would be a security risk without processing the input first
         var result = math.evaluate(msg);
         //io.emit('chat message', msg + ' = ' + result);
-        socket.broadcast.emit('chat message', msg);
-        socket.emit('users message', msg);
+        socket.broadcast.emit('chat message', msg + " = " + result);
+        socket.emit('users message', msg + " = " + result);
       }
       catch (err) {
-        io.emit('chat message', "The input '" + msg + "' cannot be evaluated.");
+        socket.broadcast.emit('chat message', "The input '" + msg + "' cannot be evaluated.");
+        socket.emit('users message', "The input '" + msg + "' cannot be evaluated.");
       }
     }
   });
