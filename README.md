@@ -4,7 +4,7 @@ ambann115@gmail.com
 
 Live link: https://shielded-plateau-38869.herokuapp.com/
 
-![Public Chat Calculator](/publicchatcalculator.png)
+![Public Chat Calculator](/publicchatcalculator.PNG)
 
 This is a simple, online chat application used as a shared calculator. All users currently online will see each other's calculations. Built using node.js, math.js, express.js, socket.io, and pug. Deployed to the web using heroku.  
 
