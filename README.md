@@ -1,6 +1,5 @@
 # PublicChatCalculator
-By Amber Nelson
-ambann115@gmail.com
+By Amber Nelson: ambann115@gmail.com
 
 Live link: https://shielded-plateau-38869.herokuapp.com/
 
