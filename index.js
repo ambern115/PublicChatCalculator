@@ -29,7 +29,6 @@ io.on('connection', (socket) => {
         socket.emit('users message', msg + " = " + result);
       }
       catch (err) {
-        socket.broadcast.emit('chat message', "The input '" + msg + "' cannot be evaluated.");
         socket.emit('users message', "The input '" + msg + "' cannot be evaluated.");
       }
     }
