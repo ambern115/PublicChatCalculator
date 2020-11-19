@@ -4,7 +4,7 @@ const path = require('path');
 const PORT = process.env.PORT || 5000;
 
 app.get('/', (req, res) => {
-  res.send(__dirname + '/index.html');
+  res.send(__dirname + '../index.html');
 });
 
 http.listen(PORT, () => {
