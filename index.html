@@ -23,6 +23,7 @@
           return false;
         });
         socket.on('chat message', function(msg){
+          $('#messages').append($('<li>').text(math.range(0, 4)));
           $('#messages').append($('<li>').text(msg));
         });
       });
