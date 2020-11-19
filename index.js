@@ -30,33 +30,25 @@ var sess;
 // Create the homepage route at '/'
 app.get('/', (req, res) => {
   sess = req.session;
-  console.log(sess.id);
-  console.log(sess.msg1);
-  if (sess.msg1) {
-    //res.redirect('/sendmsg');
-    res.render('index');
+  if (sess.msgs) {
+    res.render('index', { msgs: sess.msgs })
   } else {
     res.render('index');
-    //res.sendFile(__dirname + '/index.html');
   }
 });
 
+// Add messages to the saved session
 app.post('/postmsg', (req, res) => {
   sess = req.session;
-  sess.msg1 = req.body.msg;
-  console.log(sess.msg1);
-  sess.save();
-});
-
-app.get('/sendmsg', function(req,res) {
-  console.log('sendmessage?');
-  sess = req.session;
-  if (sess.msg1) {
-    res.render('index');
-    //res.sendFile(__dirname + '/index.html');
-    
-    //res.write('<h1>Hey ' + sess.msg1 + ' </h1>');
+  if (sess.msgs == null) {
+    sess.msgs = [[req.body.msg, req.body.type]];
+  } else {
+    if (sess.msgs.length > 10) {
+      sess.msgs.shift();
+    }
+    sess.msgs.push([req.body.msg, req.body.type]);
   }
+  sess.save();
 });
 
 // Get path to the public folder - used to access style sheet
@@ -66,7 +58,7 @@ app.use(express.static(publicPath));
 
 socketio.on('connection', (socket) => {
   socket.on('chat message', (msg) => {
-    if (msg != "") {
+    if (msg != "" || msg.includes(',')) {
       try {
         // I recognize this would be a security risk without processing the input first
         var result = math.evaluate(msg);
