@@ -1,0 +1,46 @@
+doctype html
+html(lang='en')
+  head
+    title Public Chat Calculator
+    script(src='//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js')
+    script(src='https://unpkg.com/mathjs@8.0.1/')
+    link(rel='preconnect', href='https://fonts.gstatic.com')
+    link(rel='stylesheet', href='https://fonts.googleapis.com/css2?family=Nunito:wght@300&display=swap')
+    link(rel='stylesheet', href='style.css')
+  body
+    h3 Public Chat Calculator
+    div#messages-box
+      ul#messages
+
+    form(
+      action=''
+    )
+      input#m(
+        autocomplete='off'
+      )
+      button Send
+
+    script(src='/socket.io/socket.io.js')
+    script(src='https://code.jquery.com/jquery-3.4.1.min.js')
+    script.
+      $(function () {
+        var socket = io();
+        var message_div = document.getElementById("messages-box");
+
+        $('form').submit(function(e){
+          e.preventDefault(); // prevents page reloading
+          socket.emit('chat message', $('#m').val());
+          $('#m').val('');
+          return false;
+        });
+        socket.on('chat message', function(msg){
+          $('#messages').append($('<li class="recieved-message">').text(msg));
+          message_div.scrollTop = message_div.scrollHeight;
+        });
+        socket.on('users message', function(msg){
+          $('#messages').append($('<li class="sent-message">').text(msg));
+          message_div.scrollTop = message_div.scrollHeight;
+          $.post('/postmsg', {msg: msg}, function(data) {});
+        })
+      });
+      

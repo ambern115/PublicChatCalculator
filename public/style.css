@@ -1,8 +1,90 @@
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body { font: 13px Helvetica, Arial; }
-form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
-form input { border: 0; padding: 10px; width: 90%; margin-right: 0.5%; }
-form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
-#messages { list-style-type: none; margin: 0; padding: 0; }
-#messages li { padding: 5px 10px; }
-#messages li:nth-child(odd) { background: #eee; }
+* { 
+  margin: 0; 
+  padding: 0; 
+  box-sizing: border-box; 
+}
+body { 
+  background: #fff;
+  font-family: "Nunito";
+  padding-top: 50px;
+  padding-bottom: 20px;
+}
+h3 {
+  background: #106466;
+  text-align: center;
+  text-decoration: underline;
+  text-decoration-color: #2d3532;
+  font-family: "Nunito";
+  font-weight: normal;
+  font-size: 20px;
+  color: #fff;
+  border-bottom: 5px solid #fdcb9c;
+  padding: 10px; 
+  position: fixed; 
+  top: 0px; 
+  width: 100%; 
+}
+form { 
+  background: #106466; 
+  padding: 10px; 
+  position: fixed; 
+  bottom: 0px; 
+  width: 100%; 
+}
+form input { 
+  background: #fdcb9c;
+  border: 0;
+  padding: 10px; 
+  width: 83%; 
+  margin-right: 0.5%; 
+  margin-left: 1.8%;
+  border-radius: 0px 25px 25px 0px;
+  outline: none;
+}
+form button { 
+  width: 11%; 
+  background: #2d3532;
+  font-weight: bold;
+  color: #fff;
+  border: none; 
+  margin: 8px;
+  padding: 8px;
+  border-radius: 25px 25px 25px 25px;
+  outline: none;
+}
+button:hover {
+  background: #38413d
+}
+#messages-box {
+  height: 85vh;
+  
+  border-width: 8px;
+  overflow: auto;
+}
+#messages { 
+  list-style-type: none; 
+  font-size: 18px;
+  font-weight: 600;
+  height: 25px;
+  padding: 6px; 
+  width: 100%;
+  margin-bottom: 100px;
+  
+}
+#messages li { 
+  width: 100%;
+  color: #2d3532;
+  padding: 6px 15px 6px 15px;
+  margin: 4px 0px 4px 0px;
+  word-wrap: normal;
+}
+.recieved-message {
+  text-align: left;
+  background: #8aced3;
+  border-radius: 0px 25px 25px 0px;
+}
+.sent-message {
+  text-align: right;
+  background: #c9e9ed;
+  border-radius: 25px 0px 0px 25px;
+}

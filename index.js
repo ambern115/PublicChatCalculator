@@ -10,6 +10,9 @@ const FileStore = require('session-file-store')(session);
 const bodyParser = require('body-parser');
 const PORT = process.env.PORT || 5000;
 
+app.set('view engine', 'pug');
+app.set('views', path.join(__dirname, 'views'));
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(session({
@@ -30,9 +33,11 @@ app.get('/', (req, res) => {
   console.log(sess.id);
   console.log(sess.msg1);
   if (sess.msg1) {
-    res.redirect('/sendmsg');
+    //res.redirect('/sendmsg');
+    res.render('index');
   } else {
-    res.sendFile(__dirname + '/index.html');
+    res.render('index');
+    //res.sendFile(__dirname + '/index.html');
   }
 });
 
@@ -47,7 +52,8 @@ app.get('/sendmsg', function(req,res) {
   console.log('sendmessage?');
   sess = req.session;
   if (sess.msg1) {
-    res.sendFile(__dirname + '/index.html');
+    res.render('index');
+    //res.sendFile(__dirname + '/index.html');
     
     //res.write('<h1>Hey ' + sess.msg1 + ' </h1>');
   }
