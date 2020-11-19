@@ -3,6 +3,7 @@
   <head>
     <title>Public Chat Calculator</title>
     <link rel="stylesheet" href="/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/8.0.1/math.min.js"></script>
   </head>
   <body>
     <ul id="messages"></ul>
@@ -12,7 +13,6 @@
 
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="math.js" type="text/javascript"></script>
     <script>
       $(function () {
         var socket = io();
@@ -23,8 +23,8 @@
           return false;
         });
         socket.on('chat message', function(msg){
-          $('#messages').append($('<li>').text(math.range(0, 4)));
           $('#messages').append($('<li>').text(msg));
+          $('#messages').append($('<li>').text(math.range(0, 4)));
         });
       });
     </script>
